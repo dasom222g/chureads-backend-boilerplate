@@ -17,6 +17,7 @@ export const connectDB = async () => {
         ? process.env.MONGODB_URI_ATLAS
         : process.env.MONGODB_URI_LOCAL;
     console.log("URL", MONGODB_URI);
+
     const client = new MongoClient(MONGODB_URI);
     await client.connect();
 
