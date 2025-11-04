@@ -1,12 +1,10 @@
 import OpenAI from "openai";
 import "dotenv/config";
 
-// openAI세팅
+// TODO: openAI세팅
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
-
-// 태그생성 코드
 
 /**
  * OpenAI API 호출을 위한 태그 생성 프롬프트를 생성하는 함수
@@ -57,7 +55,7 @@ const createTagPrompt = (content) => {
 };
 
 /**
- * 게시글 내용을 분석하여 관련 태그를 생성하는 함수
+ * TODO: 게시글 내용을 분석하여 관련 태그를 생성하는 함수
  * @function generateTags
  * @description OpenAI GPT 모델을 사용하여 게시글 내용을 분석하고,
  *              감정, 주제, 상황을 반영한 한글 태그 3개를 생성합니다.
@@ -66,28 +64,8 @@ const createTagPrompt = (content) => {
  *
  * @returns {Promise<Array<string>>} 생성된 태그 3개가 담긴 문자열 배열
  */
-export const generateTags = async (content) => {
-  const messages = createTagPrompt(content);
 
-  try {
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o",
-      messages,
-      temperature: 1,
-      max_tokens: 4000,
-      top_p: 1,
-    });
-
-    // 미션: AI가 출력한 태그들의 텍스트를 배열로 변환하여 반환하기
-    const tagText = response.choices[0].message.content;
-    const tags = tagText.split(",");
-    return tags;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
+// 테스트 데이터
 const testContents = [
   "회사에서 야근하고 집에 오는 길.. 편의점에서 아이스크림 하나 사먹고 있는데 왜 이렇게 달콤한지 ㅋㅋ 오늘도 고생한 나에게 주는 작은 선물이라고 생각하니까 기분이 좋아지네요 💙",
 
@@ -95,12 +73,3 @@ const testContents = [
 
   "새벽 2시에 배포했는데 에러 터져서 롤백하고 있는 중.. 왜 개발할 땐 잘 됐는데 배포만 하면 이럴까 😭😭 '제 컴퓨터에서는 잘 되는데요?' 는 개발자의 명언이지만 지금은 너무 현실이 아프다 ㅠㅠ #야근각",
 ];
-
-export const testTagGenerate = async () => {
-  testContents.forEach(async (content, index) => {
-    console.log(`============ 테스트 ${index} =============`);
-    console.log("⚠️ 원본:", content);
-    const result = await generateTags(content);
-    console.log("🚀 ~ result:", result);
-  });
-};
