@@ -65,28 +65,6 @@ const createTagPrompt = (content) => {
  * @returns {Promise<Array<string>>} 생성된 태그 3개가 담긴 문자열 배열
  */
 
-export const generateTags = async (content) => {
-  const messages = createTagPrompt(content);
-
-  try {
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o",
-      messages,
-      temperature: 1,
-      max_tokens: 4000,
-      top_p: 1,
-    });
-
-    // 미션: AI가 출력한 태그들의 텍스트를 배열로 변환하여 반환하기
-    const tagText = response.choices[0].message.content;
-    const tags = tagText.split(",");
-    return tags;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
 // 테스트 데이터
 export const testContents = [
   "회사에서 야근하고 집에 오는 길.. 편의점에서 아이스크림 하나 사먹고 있는데 왜 이렇게 달콤한지 ㅋㅋ 오늘도 고생한 나에게 주는 작은 선물이라고 생각하니까 기분이 좋아지네요 💙",
